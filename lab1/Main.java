@@ -33,6 +33,7 @@ public class Main
 
         Complex c1 = new Complex(41.0, 59.0);
         Complex c2 = new Complex(36.5, -17.0);
+        
         System.out.println("First complex number:");
         System.out.println(c1.toString());
 
@@ -102,7 +103,7 @@ class Complex
 
     public Complex(double real, double imaginated)
     {
-        this.real = real;
+        this.real = real; 
         this.imaginated = imaginated;
     }
 

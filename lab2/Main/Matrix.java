@@ -12,27 +12,16 @@ public class Matrix {
         data = new int[size][size];
         for (int i = 0; i < size; ++i)
         {
-            for (int j = 0 ; j < size; ++j)
-            {
-                if (i == j)
-                {
-                    data[i][j] = 1;
-                }
-                else 
-                {
-                    data[i][j] = 0;
-                }
-            }
-
+            data[i][i] = 1;
         }
     }
 
-    public int get_element(int row, int col)
+    public int getElement(int row, int col)
     {
         return data[row][col];
     }
 
-    public void set_element(int row, int col, int value)
+    public void setElement(int row, int col, int value)
     {
         data[row][col] = value;
     }
@@ -46,7 +35,7 @@ public class Matrix {
         {
             for (int j = 0; j < size; ++j)
             {
-                res.set_element(i, j, this.get_element(i, j) + other.get_element(i, j));
+                res.setElement(i, j, this.getElement(i, j) + other.getElement(i, j));
             }
         }
         
@@ -64,10 +53,10 @@ public class Matrix {
                 int sum = 0;
 
                 for (int k = 0; k < size; ++k) {
-                    sum += this.get_element(i, k) * other.get_element(k, j);
+                    sum += this.getElement(i, k) * other.getElement(k, j);
                 }
                 
-                res.set_element(i, j, sum);
+                res.setElement(i, j, sum);
             }
         }
         return res;
@@ -90,5 +79,38 @@ public class Matrix {
         }
 
         return sb.toString();       
+    }
+
+    Matrix doMiracle(int type)
+    {
+        if (type != 0 && type != 1)
+        {
+            throw new RuntimeException("Unsupported format");
+        }
+
+        Matrix result = new Matrix(size);
+        
+        if (type == 0)
+        {
+            for (int i = 0; i < size; ++i)
+            {
+                for (int j = 0; j < size; ++j)
+                {
+                    result.setElement(i, j, this.getElement(i, size - j -1));
+                }
+            }
+        }
+        else if (type == 1)
+        {
+            for (int i = 0; i < size; ++i)
+            {
+                for (int j = 0; j < size; ++j)
+                {
+                    result.setElement(i, j, this.getElement(size - i - 1, j));
+                }
+            }
+        }
+
+        return result;
     }
 }
