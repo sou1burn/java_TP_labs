@@ -2,7 +2,9 @@ package Main;
 
 import Matrix.Matrix;
 import SquareMatrix.SquareMatrix;
+import MatrixException.BadMatrixSizesException;
 import MatrixException.MatrixOperationException;
+import MirrorMatrixHor.MirrorMatrixHor;
 
 public class Main
 {
@@ -13,37 +15,37 @@ public class Main
         {
             System.out.println("Создание матрицы 2x3:");
             Matrix m1 = new Matrix(2, 3);
-            m1.set_element(0, 0, 1);
-            m1.set_element(0, 1, 2);
-            m1.set_element(0, 2, 3);
-            m1.set_element(1, 0, 4);
-            m1.set_element(1, 1, 5);
-            m1.set_element(1, 2, 6);
+            m1.setElement(0, 0, 1);
+            m1.setElement(0, 1, 2);
+            m1.setElement(0, 2, 3);
+            m1.setElement(1, 0, 4);
+            m1.setElement(1, 1, 5);
+            m1.setElement(1, 2, 6);
 
-            System.out.println("Матрица m1:");
+            System.out.println("Матрица m1 (2x3):");
             System.out.println(m1);
 
             System.out.println("Создание матрицы 2x3 для сложения с m1:");
             Matrix m2 = new Matrix(2, 3);
-            m2.set_element(0, 0, 6);
-            m2.set_element(0, 1, 5);
-            m2.set_element(0, 2, 4);
-            m2.set_element(1, 0, 3);
-            m2.set_element(1, 1, 2);
-            m2.set_element(1, 2, 1);
+            m2.setElement(0, 0, 6);
+            m2.setElement(0, 1, 5);
+            m2.setElement(0, 2, 4);
+            m2.setElement(1, 0, 3);
+            m2.setElement(1, 1, 2);
+            m2.setElement(1, 2, 1);
 
-            System.out.println("Матрица m2:");
+            System.out.println("Матрица m2 (2x3):");
             System.out.println(m2);
 
             Matrix sum = m1.sum(m2);
-            System.out.println("Сумма матриц m1 и m2:");
+            System.out.println("Сумма матриц m1 и m2 (2x3):");
             System.out.println(sum);
 
-            // Попытка умножения матриц с несовместимыми размерами
+            
             try
             {
-                Matrix m3 = new Matrix(3, 2);
-                System.out.println("Попытка умножения несовместимых матриц m1 и m3:");
+                Matrix m3 = new Matrix(4, 3);
+                System.out.println("Попытка умножения несовместимых матриц m1 и m3 (2x3 * 4x3):");
                 Matrix product = m1.product(m3);
                 System.out.println(product);
             }
@@ -57,8 +59,7 @@ public class Main
         {
             System.err.println("Ошибка: " + e.getMessage());
         }
-
-        // Тестирование квадратной матрицы
+        
         try
         {
             System.out.println("\nСоздание квадратной матрицы размером 3x3:");
@@ -70,11 +71,15 @@ public class Main
             System.out.println("Создание второй квадратной матрицы размером 3x3 (единичная матрица):");
             System.out.println(sm2);
 
+            SquareMatrix sm3 = new SquareMatrix(2);
+            System.out.println("Проверка суммирования квадратных матриц разных размеров");
+            System.out.println(sm3.sum(sm2));
+
             Matrix sumSquares = sm1.sum(sm2);
             System.out.println("Сумма квадратных матриц sm1 и sm2:");
             System.out.println(sumSquares);
 
-            // Попытка сложения квадратной матрицы с обычной матрицей
+            
             try
             {
                 Matrix m1_t = new Matrix(2, 3);
@@ -88,6 +93,7 @@ public class Main
                 Matrix sumInvalid = sm1.sum(new Matrix(2, 3));
                 System.out.println(sumInvalid);
                 
+
             }
             catch (MatrixOperationException e)
             {
@@ -98,6 +104,107 @@ public class Main
         catch (MatrixOperationException e)
         {
             System.err.println("Ошибка: " + e.getMessage());
+        }
+
+        try
+        {
+            Matrix mA = new Matrix(3, 3);
+            mA.setElement(0, 0, 34);
+            mA.setElement(0, 1, 34);
+            mA.setElement(0, 2, 34);
+            mA.setElement(1, 0, 34);
+            mA.setElement(1, 1, 34);
+            mA.setElement(1, 2, 34);
+            mA.setElement(2, 0, 34);
+            mA.setElement(2, 1, 34);
+            mA.setElement(2, 2, 34);
+
+            Matrix mB = new Matrix(3, 3);
+            mB.setElement(0, 0, 34);
+            mB.setElement(0, 1, 34);
+            mB.setElement(0, 2, 34);
+            mB.setElement(1, 0, 34);
+            mB.setElement(1, 1, 34);
+            mB.setElement(1, 2, 34);
+            mB.setElement(2, 0, 34);
+            mB.setElement(2, 1, 34);
+            mB.setElement(2, 2, 34);
+
+            System.out.println("A equals B? " + mA.equals(mB));
+
+            Matrix mB1 = new Matrix(2, 2);
+            mB1.setElement(0, 0, 34);
+            mB1.setElement(0, 1, 34);
+            mB1.setElement(1, 0, 3);
+            mB1.setElement(1, 1, 34);
+
+            System.out.println("A equals B? " + mA.equals(mB1));
+        }
+        catch (MatrixOperationException e)
+        {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+        try 
+        {
+            Matrix m10 = new Matrix(3, 3);
+            SquareMatrix m11 = new SquareMatrix(3);
+
+            m10.setElement(0, 0, 1);
+            m10.setElement(0, 1, 1);
+            m10.setElement(1, 1, 1);
+            m10.setElement(2, 2, 1);
+
+            Matrix m12 = m10.sum(m11);
+            System.out.println("Matrix m10: ");
+            System.out.println(m10.toString());
+
+            System.out.println("Matrix m11: ");
+            System.out.println(m11.toString());
+
+            System.out.println("Trying m10 + square m11");
+
+            System.out.println(m12.toString());
+
+            Matrix m13 = m10.product(m11);
+
+            System.out.println("Trying m10 * square m11");
+            System.out.println(m13.toString());
+
+            SquareMatrix m14 = new SquareMatrix(2);
+            System.out.println("SquareMatrix m14: ");
+            System.out.println(m14.toString());
+
+            System.out.println("Trying m10 * square m14");
+            System.out.println(m10.product(m14));
+        }
+        catch (MatrixOperationException e)
+        {
+            System.err.println("Error:" + e.getMessage());
+        }
+
+        try
+        {
+            MirrorMatrixHor matrix = new MirrorMatrixHor(4, 5);
+    
+            matrix.setElement(0, 0, 1);
+            matrix.setElement(0, 1, 2);
+            matrix.setElement(0, 2, 3);
+            matrix.setElement(0, 3, 4);
+            matrix.setElement(0, 4, 5);
+            matrix.setElement(1, 1, 6);
+            matrix.setElement(1, 2, 7);
+            matrix.setElement(1, 3, 8);
+            matrix.setElement(1, 4, 9);
+            matrix.setElement(2, 2, 10);
+            matrix.setElement(2, 3, 11);
+            matrix.setElement(2, 4, 12);
+    
+            System.out.println(matrix);
+        }
+        catch (BadMatrixSizesException e)
+        {
+            System.err.println("Error: " + e.getMessage()) ;
         }
     }
 

@@ -11,7 +11,7 @@ public final class SquareMatrix extends Matrix {
 
         for (int i = 0 ; i < size; ++i)
         {
-            data[i][i] = 1;
+            setElement(i, i, 1);
         }
     }
 
@@ -19,11 +19,6 @@ public final class SquareMatrix extends Matrix {
     @Override
     public Matrix sum(Matrix other)
     {
-        if (!(other instanceof SquareMatrix))
-        {
-            throw new MatrixOperationException("Both matrixes should be square for sum!");
-        }
-
         return super.sum(other);
     }
 }

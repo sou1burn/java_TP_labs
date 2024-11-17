@@ -22,13 +22,12 @@ public class Matrix {
         {
             for (int j = 0 ; j < cols; ++j)
             {
-                    data[i][j] = 0;
+                data[i][j] = 0;
             }
-
         }
     }
 
-    public final int get_element(int row, int col)
+    public int getElement(int row, int col)
     {
         if (row < 0 || row >= this.rows || col < 0 || col >= this.cols)
         {
@@ -37,7 +36,7 @@ public class Matrix {
         return data[row][col];
     }
 
-    public final void set_element(int row, int col, int value)
+    public void setElement(int row, int col, int value)
     {
         if (row < 0 || row >= this.rows || col < 0 || col >= this.cols)
         {
@@ -60,7 +59,7 @@ public class Matrix {
         {
             for (int j = 0; j < cols; ++j)
             {
-                res.set_element(i, j, this.get_element(i, j) + other.get_element(i, j));
+                res.setElement(i, j, this.getElement(i, j) + other.getElement(i, j));
             }
         }
         
@@ -83,10 +82,10 @@ public class Matrix {
                 int sum = 0;
 
                 for (int k = 0; k < this.cols; ++k) {
-                    sum += this.get_element(i, k) * other.get_element(k, j);
+                    sum += this.getElement(i, k) * other.getElement(k, j);
                 }
 
-                res.set_element(i, j, sum);
+                res.setElement(i, j, sum);
             }
         }
 
@@ -96,7 +95,7 @@ public class Matrix {
 
 
     @Override
-    public final String toString()
+    public String toString()
     {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < rows; i++)
@@ -113,8 +112,20 @@ public class Matrix {
     }
 
     
-    public boolean m_equals(Matrix other)
+    @Override
+    public final boolean equals(Object o)
     {
+        if (this == o)
+        {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+
+        Matrix other = (Matrix) o;
         
         if (this.rows != other.rows || this.cols != other.cols)
         {
@@ -133,39 +144,5 @@ public class Matrix {
         }
 
         return true;
-    }
-
-    @Override
-    public final boolean equals(Object o)
-    {
-        if (this == o)
-        {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass())
-        {
-            return false;
-        }
-
-        Matrix other = (Matrix) o;
-        
-        if (this.rows != other.rows || this.cols != other.cols)
-        {
-            throw new MatrixOperationException("Matrixes sizes should be equal");
-        }
-
-        for (int i = 0; i < this.rows; ++i)
-        {
-            for (int j = 0; j < this.cols; ++j)
-            {
-                if (this.data[i][j] != other.data[i][j]){
-                    return false;
-                }
-            }
-        }
-
-        return true;
-
     }   
 }
