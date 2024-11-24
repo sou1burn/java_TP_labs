@@ -1,10 +1,11 @@
 package Matrix;
 import MatrixException.MatrixOperationException;
+import MirrorMatrixHor.MirrorMatrixHor;
 public class Matrix {
 
-    protected int rows;
-    protected int cols;
-    protected int[][] data;
+    protected final int rows;
+    protected final int cols;
+    protected final int[][] data;
 
 
     public Matrix(int rows, int cols) 
@@ -45,19 +46,41 @@ public class Matrix {
 
         data[row][col] = value;
     }
-
-
+  
     public Matrix sum(Matrix other)
     {
+        int row = this.rows;
+
+        if (other.getClass() == MirrorMatrixHor.class || this.getClass() == MirrorMatrixHor.class)
+        {
+            row *= 2;
+        }
         if (this.rows != other.rows || this.cols != other.cols)
         {
-            throw new MatrixOperationException("Matrixes sizes should be equal");
+            if (other.getClass() == MirrorMatrixHor.class)
+            {
+                if (this.rows != other.rows * 2)
+                {
+                    throw new MatrixOperationException("Cannot sum matrices with different sizes");
+                }
+            }
+            else if (this.getClass() == MirrorMatrixHor.class)
+            {
+                if ( other.rows != this.rows* 2 )
+                {
+                    throw new MatrixOperationException("Cannot sum matrices with different sizes");
+                }
+            }
+            else
+            {
+                throw new MatrixOperationException("Cannot sum matrices with different sizes");
+            } 
         }
 
-        Matrix res = new Matrix(rows, cols);
-        for (int i = 0; i < rows; ++i)
+        Matrix res = new Matrix(row, cols);
+        for (int i = 0; i < res.rows; ++i)
         {
-            for (int j = 0; j < cols; ++j)
+            for (int j = 0; j < res.cols; ++j)
             {
                 res.setElement(i, j, this.getElement(i, j) + other.getElement(i, j));
             }
@@ -69,15 +92,38 @@ public class Matrix {
     
     public final Matrix product(Matrix other) 
     {
-        if (this.cols != other.rows)
+        int row = this.rows;
+
+        if (other.getClass() == MirrorMatrixHor.class || this.getClass() == MirrorMatrixHor.class)
         {
-            throw new MatrixOperationException("Number of cols should be equal to number of rows in another matrix");
+            row *= 2;
+        }
+        if (this.rows != other.rows || this.cols != other.cols)
+        {
+            if (other.getClass() == MirrorMatrixHor.class)
+            {
+                if (this.rows != other.rows * 2)
+                {
+                    throw new MatrixOperationException("Cannot sum matrices with different sizes");
+                }
+            }
+            else if (this.getClass() == MirrorMatrixHor.class)
+            {
+                if ( other.rows != this.rows* 2 )
+                {
+                    throw new MatrixOperationException("Cannot sum matrices with different sizes");
+                }
+            }
+            else
+            {
+                throw new MatrixOperationException("Cannot sum matrices with different sizes");
+            } 
         }
 
-        Matrix res = new Matrix(this.rows, other.cols);
+        Matrix res = new Matrix(row, other.cols);
 
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < other.cols; ++j) {
+        for (int i = 0; i < res.rows; ++i) {
+            for (int j = 0; j < res.cols; ++j) {
 
                 int sum = 0;
 
@@ -98,15 +144,14 @@ public class Matrix {
     public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < cols; j++)
-            {
-                sb.append(data[i][j]).append(" ");
-            }
-
-            sb.append("\n");
-        }
+        for (int[] row : data)
+        { 
+            for (int value : row)
+            { 
+                sb.append(value).append(" "); 
+            } 
+            sb.append("\n"); 
+        } 
 
         return sb.toString();
     }

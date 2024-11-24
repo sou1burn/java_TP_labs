@@ -185,27 +185,98 @@ public class Main
 
         try
         {
-            MirrorMatrixHor matrix = new MirrorMatrixHor(4, 5);
-    
+            MirrorMatrixHor matrix = new MirrorMatrixHor(4, 4);
+
             matrix.setElement(0, 0, 1);
             matrix.setElement(0, 1, 2);
-            matrix.setElement(0, 2, 3);
-            matrix.setElement(0, 3, 4);
-            matrix.setElement(0, 4, 5);
-            matrix.setElement(1, 1, 6);
-            matrix.setElement(1, 2, 7);
-            matrix.setElement(1, 3, 8);
-            matrix.setElement(1, 4, 9);
-            matrix.setElement(2, 2, 10);
-            matrix.setElement(2, 3, 11);
-            matrix.setElement(2, 4, 12);
+            matrix.setElement(1, 0, 3);
     
+            System.out.println("Matrix after setting upper half:");
             System.out.println(matrix);
+    
+            System.out.println("Mirror test:");
+            System.out.println("Element at (0, 1): " + matrix.getElement(0, 1)); 
+            System.out.println("Element at (3, 1): " + matrix.getElement(3, 1));
+            
         }
         catch (BadMatrixSizesException e)
         {
             System.err.println("Error: " + e.getMessage()) ;
         }
+        try
+        {
+            System.out.println("\n=== Проверка операций MirrorMatrixHor ===");
+            
+            MirrorMatrixHor mirrorMatrix = new MirrorMatrixHor(4, 4);
+            mirrorMatrix.setElement(0, 0, 1);
+            mirrorMatrix.setElement(0, 1, 2);
+            mirrorMatrix.setElement(0, 2, 3);
+            mirrorMatrix.setElement(0, 3, 4);
+            mirrorMatrix.setElement(1, 0, 5);
+            mirrorMatrix.setElement(1, 1, 6);
+            mirrorMatrix.setElement(1, 2, 7);
+            mirrorMatrix.setElement(1, 3, 8);
+        
+            System.out.println("MirrorMatrixHor (4x4):");
+            System.out.println(mirrorMatrix);
+        
+            Matrix regularMatrix = new Matrix(4, 4);
+            regularMatrix.setElement(0, 0, 9);
+            regularMatrix.setElement(0, 1, 8);
+            regularMatrix.setElement(0, 2, 7);
+            regularMatrix.setElement(0, 3, 6);
+            regularMatrix.setElement(1, 0, 5);
+            regularMatrix.setElement(1, 1, 4);
+            regularMatrix.setElement(1, 2, 3);
+            regularMatrix.setElement(1, 3, 2);
+            regularMatrix.setElement(2, 0, 1);
+            regularMatrix.setElement(2, 1, 0);
+            regularMatrix.setElement(2, 2, -1);
+            regularMatrix.setElement(2, 3, -2);
+            regularMatrix.setElement(3, 0, -3);
+            regularMatrix.setElement(3, 1, -4);
+            regularMatrix.setElement(3, 2, -5);
+            regularMatrix.setElement(3, 3, -6);
+        
+            System.out.println("Matrix (4x4):");
+            System.out.println(regularMatrix);
+        
+            
+            System.out.println("\nСложение MirrorMatrixHor и Matrix:");
+            Matrix sumResult = mirrorMatrix.sum(regularMatrix);
+            System.out.println("Результат:");
+            System.out.println(sumResult);
+        
+            System.out.println("\nУмножение MirrorMatrixHor на Matrix:");
+            Matrix productResult = mirrorMatrix.product(regularMatrix);
+            System.out.println("Результат:");
+            System.out.println(productResult);
+        
+            SquareMatrix squareMatrix = new SquareMatrix(4);
+            squareMatrix.setElement(0, 0, 1);
+            squareMatrix.setElement(1, 1, 1);
+            squareMatrix.setElement(2, 2, 1);
+            squareMatrix.setElement(3, 3, 1);
+        
+            System.out.println("SquareMatrix (4x4):");
+            System.out.println(squareMatrix);
+        
+            System.out.println("\nСложение MirrorMatrixHor и SquareMatrix:");
+            Matrix sumSquareResult = mirrorMatrix.sum(squareMatrix);
+            System.out.println("Результат:");
+            System.out.println(sumSquareResult);
+        
+            System.out.println("\nУмножение MirrorMatrixHor на SquareMatrix:");
+            Matrix productSquareResult = mirrorMatrix.product(squareMatrix);
+            System.out.println("Результат:");
+            System.out.println(productSquareResult);
+        
+        }
+        catch (BadMatrixSizesException | MatrixOperationException e)
+        {
+            System.err.println("Ошибка: " + e.getMessage());
+        }
+        
     }
 
 }
