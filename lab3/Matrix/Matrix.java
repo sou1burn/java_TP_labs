@@ -104,19 +104,19 @@ public class Matrix {
             {
                 if (this.rows != other.rows * 2)
                 {
-                    throw new MatrixOperationException("Cannot sum matrices with different sizes");
+                    throw new MatrixOperationException("Cannot multiply matrices with different sizes");
                 }
             }
             else if (this.getClass() == MirrorMatrixHor.class)
             {
                 if ( other.rows != this.rows* 2 )
                 {
-                    throw new MatrixOperationException("Cannot sum matrices with different sizes");
+                    throw new MatrixOperationException("Cannot multiply matrices with different sizes");
                 }
             }
             else
             {
-                throw new MatrixOperationException("Cannot sum matrices with different sizes");
+                throw new MatrixOperationException("Cannot multiply matrices with different sizes");
             } 
         }
 
