@@ -9,11 +9,11 @@ public class EncodingConverter {
 
         if (args.length != 4)
         {
-            System.out.println("Usage: java EncodingConverter <inputFile> <outputFile> <inputEncoding> <outputEncoding>");
+            System.out.println("Use: java <main> <inputFile> <outputFile> <inputEncoding> <outputEncoding>");
             return;
         }
 
-        String in = args[0];
+        String in = args[0]; 
         String out = args[1];
         String baseEncoding = args[2];
         String outEncoding = args[3];

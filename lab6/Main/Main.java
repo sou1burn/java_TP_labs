@@ -22,11 +22,12 @@ public class Main {
         }
 
         System.out.println("Parsed values from sscanf:");
-        for (Object value : valuess) {
+        for (Object value : valuess) 
+        {
             System.out.println(value);
         }
-
-        String[] argc = {"in.txt", "out.txt", "us-ascii", "iso-8859-1"};
+        
+        String[] argc = {"in.txt", "out.txt", "us-ascii", "utf-16"};
         
         EncodingConverter.convert(argc);
 
