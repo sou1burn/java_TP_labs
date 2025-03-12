@@ -21,8 +21,8 @@ public class ParallelMatrixProduct {
         int rowsPerThread = (int) Math.ceil((double) m1.getRows() / threadCount);
 
         for (int i = 0; i < threadCount; ++i) {
-            int startRow = i * rowsPerThread;
-            int endRow =  Math.min(startRow + rowsPerThread, m1.getRows());
+            final int startRow = i * rowsPerThread;
+            final int endRow =  Math.min(startRow + rowsPerThread, m1.getRows());
 
             threads[i] = new Thread(() -> {
                 for (int row = startRow; row < endRow; row++) {
@@ -47,5 +47,9 @@ public class ParallelMatrixProduct {
         }
 
         return res;
+    }
+
+    public int getThreadCount() {
+        return threadCount;
     }
 }

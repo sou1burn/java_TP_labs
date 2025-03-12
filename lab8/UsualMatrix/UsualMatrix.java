@@ -30,6 +30,7 @@ public class UsualMatrix {
     {
         return cols;
     }
+    
     public int getElement(int row, int col)
     {
         if (row < 0 || row >= this.rows || col < 0 || col >= this.cols)
