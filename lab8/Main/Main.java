@@ -27,7 +27,7 @@ public class Main {
         ParallelNQueens solver = new ParallelNQueens(4);
         int solutions = solver.calcQueenNum(N);
         long endQuennsParallel = System.currentTimeMillis();
-        System.out.println("Total solutions: " + solutions + " Duration: " + (endQuennsParallel - startQueensParallel) + " ms");
+        System.out.println("Total solutions: " + solutions + " Duration: " + (endQuennsParallel - startQueensParallel) + " ms, threads: " + 4);
 
         long startQueens = System.currentTimeMillis();
         ParallelNQueens nonThreadSolver = new ParallelNQueens(1);
