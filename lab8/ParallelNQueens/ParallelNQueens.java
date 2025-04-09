@@ -1,4 +1,6 @@
 package ParallelNQueens;
+
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import UsualMatrix.*;
 
@@ -12,37 +14,34 @@ public class ParallelNQueens {
 
     public int calcQueenNum(int N) {
         solutions.set(0);
+        ExecutorService executor = Executors.newFixedThreadPool(threadCount);
 
-        Thread[] threads = new Thread[threadCount];
-
-        for (int i = 0; i < threadCount; ++i) {
-            final int startCol = i;
-            if (startCol >= N) break;
-            threads[i] = new Thread(() -> {
+        for (int col = 0; col < N; col++) {
+            final int startCol = col;
+            executor.execute(() -> {
                 UsualMatrix board = new UsualMatrix(N, N);
                 board.setElement(0, startCol, 1);
-                solve(board, 1, N);  
+                solve(board, 1, N);
             });
-            threads[i].start();
         }
-        for (Thread th : threads) {
-            try {
-                if (th != null) th.join();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+
+        executor.shutdown();
+        try {
+            executor.awaitTermination(2, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
 
         return solutions.get();
     }
 
-    public void solve(UsualMatrix board, int row, int N) {
+    private void solve(UsualMatrix board, int row, int N) {
         if (row == N) {
             solutions.incrementAndGet();
             return;
         }
 
-        for (int col = 0; col < N; ++col) {
+        for (int col = 0; col < N; col++) {
             if (isSafePosition(board, row, col, N)) {
                 UsualMatrix newBoard = copyMatrix(board, N);
                 newBoard.setElement(row, col, 1);
@@ -51,9 +50,9 @@ public class ParallelNQueens {
         }
     }
 
-    public boolean isSafePosition(UsualMatrix board, int row, int col, int N) {
-        for (int i = 0; i < row; ++i) {
-            if (board.getElement(row, col) == 1) return false;
+    private boolean isSafePosition(UsualMatrix board, int row, int col, int N) {
+        for (int i = 0; i < row; i++) {
+            if (board.getElement(i, col) == 1) return false;
             int leftDiag = col - (row - i);
             int rightDiag = col + (row - i);
             if (leftDiag >= 0 && board.getElement(i, leftDiag) == 1) return false;
@@ -64,8 +63,8 @@ public class ParallelNQueens {
 
     private UsualMatrix copyMatrix(UsualMatrix board, int N) {
         UsualMatrix copy = new UsualMatrix(N, N);
-        for (int i = 0; i < N; ++i) {
-            for (int j = 0; j < N; ++j) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
                 copy.setElement(i, j, board.getElement(i, j));
             }
         }

@@ -16,16 +16,23 @@ public class Main {
         long endTime = System.currentTimeMillis();
         System.out.println("Умножение в одном потоке: " + (endTime - startTime) + " ms");
 
-        ParallelMatrixProduct parallelProduct = new ParallelMatrixProduct(1);
+        ParallelMatrixProduct parallelProduct = new ParallelMatrixProduct(8);
         startTime = System.currentTimeMillis();
         parallelProduct.product(m1, m2);
         endTime = System.currentTimeMillis();
         System.out.println("Параллельное умножение в " + parallelProduct.getThreadCount() +" потоках: " + (endTime - startTime) + " ms");
 
-        int N = 8; 
-        int threadCount = Math.min(N, 4); 
-        ParallelNQueens solver = new ParallelNQueens(threadCount);
+        int N = 12; 
+        long startQueensParallel = System.currentTimeMillis();
+        ParallelNQueens solver = new ParallelNQueens(4);
         int solutions = solver.calcQueenNum(N);
-        System.out.println("Total solutions: " + solutions);
+        long endQuennsParallel = System.currentTimeMillis();
+        System.out.println("Total solutions: " + solutions + " Duration: " + (endQuennsParallel - startQueensParallel) + " ms");
+
+        long startQueens = System.currentTimeMillis();
+        ParallelNQueens nonThreadSolver = new ParallelNQueens(1);
+        long notThreadSolutions = nonThreadSolver.calcQueenNum(N);
+        long endQuenns = System.currentTimeMillis();
+        System.out.println("Total solutions: " + notThreadSolutions + " Duration: " + (endQuenns - startQueens) + " ms");
     }
 }
