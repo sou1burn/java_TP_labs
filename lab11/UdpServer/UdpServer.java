@@ -65,6 +65,14 @@ public class UdpServer {
                 sock.close();
                 scanner.close();
                 System.exit(0);
+            } else if (input.equals("@kill")) {
+                if (clientAddress[0] != null) {
+                    byte[] killMessage = "@kill".getBytes();
+                    DatagramPacket killPacket = new DatagramPacket(killMessage, killMessage.length, clientAddress[0], clientPort[0]);
+                    sock.send(killPacket);
+                    System.out.println("Sent @kill to client.");
+                } else 
+                    System.out.println("No client connected to kill.");
             } else if (clientAddress[0] != null) {
                 String msg = name[0] + ": "+ input;
                 byte[] data = msg.getBytes();

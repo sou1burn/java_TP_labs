@@ -1,5 +1,4 @@
 package UdpClient;
-
 import java.net.*;
 import java.util.Scanner;
 
@@ -29,6 +28,10 @@ public class UdpClient {
                     String msg = new String(packet.getData(), 0, packet.getLength());
                     if (msg.equals("@quit")) {
                         System.out.println("Server ended chat");
+                        System.exit(0);
+                    } else if (msg.equals("@kill")) {
+                        System.out.println("You were killed by server :(");
+                        sock.close();
                         System.exit(0);
                     } else 
                         System.out.println(msg);
