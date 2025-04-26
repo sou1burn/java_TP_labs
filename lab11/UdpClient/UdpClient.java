@@ -15,7 +15,7 @@ public class UdpClient {
         InetAddress serverAddress = InetAddress.getByName(args[0]);
         int serverPort = Integer.parseInt(args[1]);
 
-        DatagramSocket socket = new DatagramSocket();
+        DatagramSocket sock = new DatagramSocket();
         Scanner scanner = new Scanner(System.in);
 
         final String[] name = {"Client"};
@@ -25,7 +25,7 @@ public class UdpClient {
             while (true) {
                 try {
                     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-                    socket.receive(packet);
+                    sock.receive(packet);
                     String msg = new String(packet.getData(), 0, packet.getLength());
                     if (msg.equals("@quit")) {
                         System.out.println("Server ended chat");
@@ -34,7 +34,7 @@ public class UdpClient {
                         System.out.println(msg);
                         
                 } catch (Exception e) {
-                    if (!socket.isClosed()) {
+                    if (!sock.isClosed()) {
                         System.out.println("Error: " + e.getMessage());
                     }
                 }
@@ -47,17 +47,17 @@ public class UdpClient {
             String input = scanner.nextLine();
             if (input.startsWith("@name ")) {
                 name[0] = input.substring(6);
-                socket.send(new DatagramPacket(input.getBytes(), input.length(), serverAddress, serverPort));
+                sock.send(new DatagramPacket(input.getBytes(), input.length(), serverAddress, serverPort));
             } else if (input.equals("@quit")) {
                 byte[] quitMessage = "@quit".getBytes();
-                socket.send(new DatagramPacket(quitMessage, quitMessage.length, serverAddress, serverPort));
+                sock.send(new DatagramPacket(quitMessage, quitMessage.length, serverAddress, serverPort));
                 System.out.println("You left the chat.");
-                socket.close();
+                sock.close();
                 scanner.close();
                 System.exit(0);
             } else {
                 byte[] message = input.getBytes();
-                socket.send(new DatagramPacket(message, message.length, serverAddress, serverPort));
+                sock.send(new DatagramPacket(message, message.length, serverAddress, serverPort));
             }
         }
     }

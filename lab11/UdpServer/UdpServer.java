@@ -8,15 +8,15 @@ public class UdpServer {
 
     public static void main(String[] args) throws Exception
     {
-        if (args.length != 2) {
-            System.out.println("Usage: java UdpServerUdpServer <ip> <port>");
+        if (args.length != 1) {
+            System.out.println("Usage: java UdpServerUdpServer <port>");
             return;
         }
 
-        DatagramSocket sock = new DatagramSocket(Integer.parseInt(args[1]));
+        DatagramSocket sock = new DatagramSocket(Integer.parseInt(args[0]));
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("UdpServer started on ip: " + args[0] + " port:" + args[1]);
+        System.out.println("UdpServer started on port:" + args[0]);
 
         final String[] name = {"Server"};
         final String[] clientName = {"Client"};
