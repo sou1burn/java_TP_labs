@@ -28,6 +28,12 @@ public class TcpClient {
                     }
                 } catch (IOException e) {
                     System.out.println("Connection closed.");
+                } finally {
+                    try {
+                        System.in.close(); 
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }).start();
 
@@ -36,10 +42,8 @@ public class TcpClient {
                 out.write(userInput + "\n");
                 out.flush();
             }
-
         } catch (IOException e) {
             System.err.println("Could not connect to server.");
-            e.printStackTrace();
         }
     }
 }
