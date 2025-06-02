@@ -20,10 +20,10 @@ public class TcpServer {
                         String command = scanner.nextLine();
                         if (command.equalsIgnoreCase("exit")) {
                             running = false;
-                            shutdownServer();
-                            try {
-                                new Socket("localhost", PORT).close();
-                            } catch (IOException ignored) {}
+                            shutdownServer(serverSocket);
+                            // try {
+                            //     new Socket("localhost", PORT).close();
+                            // } catch (IOException ignored) {}
                         }
                     }
                 }
@@ -52,13 +52,22 @@ public class TcpServer {
         }
     }
 
-    private static void shutdownServer() {
+    private static void shutdownServer(ServerSocket socket) {
         synchronized (clients) {
-            for (ClientHandler handler : clients.values()) {
-                handler.send("Server shutting down. Goodbye.");
-                handler.close(); 
-            }
+            clients.values().forEach(handler -> handler.send("Server shutting down. Goodbye."));
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {}
+            
+            clients.values().forEach(ClientHandler::close);
             clients.clear();
+        }
+        try {
+            if (socket != null && !socket.isClosed()) 
+                socket.close();
+            
+        } catch (IOException e) {
+            System.err.println("Error closing server socket: " + e.getMessage());
         }
     }
 }
