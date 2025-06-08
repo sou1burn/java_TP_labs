@@ -101,5 +101,22 @@ public class Ekzamen {
             e.printStackTrace();
         }
     }
+    
+    public static void UdpReceiver(int port) {
+        try (DatagramSocket socket = new DatagramSocket(port)){
+            System.out.println("Listening on UDP port " + port);
+            byte[] buffer = new byte[1024];
 
+            while (true) {
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                socket.receive(packet); 
+
+                String received = new String(packet.getData(), 0, packet.getLength());
+                System.out.println("Received: " + received);
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
