@@ -144,6 +144,7 @@ public class ClientHandler extends Thread{
                 sb.append("\n");
             }
         }
+
         broadcast(sb.toString(), null);
     }
 
@@ -172,6 +173,6 @@ public class ClientHandler extends Thread{
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
     }
-}
 }

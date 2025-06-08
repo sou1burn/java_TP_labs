@@ -50,8 +50,8 @@ public class TcpClient {
                 } catch (IOException e) {
                     System.out.println("Connection closed because of server exited.");
                 }   
-            } catch (IOException e) {
-                System.err.println("Could not connect to server.");
-            }
+        } catch (IOException e) {
+            System.err.println("Could not connect to server.");
+        }
     }
 }

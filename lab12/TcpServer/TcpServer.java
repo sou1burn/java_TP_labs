@@ -21,9 +21,6 @@ public class TcpServer {
                         if (command.equalsIgnoreCase("exit")) {
                             running = false;
                             shutdownServer(serverSocket);
-                            // try {
-                            //     new Socket("localhost", PORT).close();
-                            // } catch (IOException ignored) {}
                         }
                     }
                 }
@@ -42,9 +39,8 @@ public class TcpServer {
                         }
                     }).start();
                 } catch (IOException e) {
-                    if (running) {
+                    if (running) 
                         System.err.println("Error accepting connection: " + e.getMessage());
-                    }   
                 }
             }
         } catch (IOException e) {
@@ -65,7 +61,6 @@ public class TcpServer {
         try {
             if (socket != null && !socket.isClosed()) 
                 socket.close();
-            
         } catch (IOException e) {
             System.err.println("Error closing server socket: " + e.getMessage());
         }
