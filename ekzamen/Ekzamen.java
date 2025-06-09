@@ -301,6 +301,79 @@ public class Ekzamen {
         }
     }
     
+    public static void UdpRemembering(int port) {
+        try (DatagramSocket socket = new DatagramSocket(port)) {
+            System.out.println("Udp listen on port" + port);
+            byte[] buf = new byte[1024];
+
+            while (true) {
+                DatagramPacket packet = new DatagramPacket(buf, buf.length);
+                socket.receive(packet);
+                String recv = new String(packet.getData(), 0, packet.getLength());
+                System.out.println("received " + recv);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void UdpReceive(int port) {
+        try (DatagramSocket sock = new DatagramSocket(port)) {
+            byte[] buf = new byte[1024];
+            DatagramPacket pack = new DatagramPacket(buf, buf.length);
+            sock.receive(pack);
+            String received = new String(pack.getData(), 0, pack.getLength());
+            System.out.println("received " + received);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void UdpSend(int port) {
+        try (DatagramSocket sock = new DatagramSocket()) {
+            InetAddress addr = InetAddress.getLocalHost();
+            byte[] buf = new byte[1024];
+            DatagramPacket pack = new DatagramPacket(buf, buf.length, addr, port);
+            sock.send(pack);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void TcpSend(int port) {
+        try (Socket sock = new Socket()) {
+            InputStream inp = sock.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inp));
+            String line;
+            while (true) {
+                line = reader.readLine();
+                if (line == null) 
+                    break;
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void TcpRemembering(int port) {
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            System.out.println("Tcp listen on port" + port);
+            Socket sock = serverSocket.accept();
+            System.out.println("Tcp client connected");           
+            InputStream input = sock.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println("recv = " + line);
+            }
+            sock.close();
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     // public static int multiThreadedMinimumOfArray(int[] arr, int threadCount) {
     //     if (arr == null || arr.length == 0 || threadCount <= 0)
