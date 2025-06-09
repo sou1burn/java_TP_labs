@@ -23,12 +23,14 @@ public class Ekzamen {
         int result = multiThreadedSumOfArray(array, 4);
         System.out.println("Total Sum: " + result); 
 
-        // int min = multiThreadedMinimumOfArray(array, 4);
-        // System.out.println("Min: " + min); 
-
         double avg = calculateAverageIn2Threads(array);
         System.out.println("Average: " + avg);
 
+        int sum1 = countSumIn2Threads(array);
+        System.out.println("Sum = " + sum1);
+
+        int minimum = findMinimumUsing2Threads(array);
+        System.out.println("Minimum = " + minimum);
     }
 
     public static int multiThreadedSumOfArray(int[] arr, int threadCount) {
@@ -120,19 +122,19 @@ public class Ekzamen {
             throw new IllegalArgumentException();
         
         int mid = arr.length / 2;
-        final int[] results = {Integer.MAX_VALUE, Integer.MAX_VALUE};
+        final int[] results = {0, 0};
 
         Thread t1 = new Thread(() -> {
-            int localMin = 0;
-            for (int i = 0; i < mid; i++) {
+            int localMin = arr[0];
+            for (int i = 1; i < mid; i++) {
                 localMin = Math.min(localMin, arr[i]);
             }
             results[0] = localMin;
         });
 
         Thread t2 = new Thread(() -> {
-            int localMin = 0;
-            for (int i = mid; i < arr.length; i++) {
+            int localMin = arr[mid];
+            for (int i = mid + 1; i < arr.length; i++) {
                 localMin = Math.min(localMin, arr[i]);
             }
             results[1] = localMin;
@@ -149,6 +151,42 @@ public class Ekzamen {
         }
 
         return Math.min(results[0], results[1]);
+    }
+
+    public static int countSumIn2Threads(int[] arr) {
+        if (arr == null || arr.length == 0)
+            throw new IllegalArgumentException();
+
+        int mid = arr.length / 2;
+        final int[] results = {0, 0};
+
+        Thread t1 = new Thread(() -> {
+            int sum = 0;
+            for (int i = 0; i < mid; i++) {
+                sum += arr[i];
+            }
+            results[0] += sum;
+        });
+
+        Thread t2 = new Thread(() -> {
+            int sum = 0;
+            for (int i = mid; i < arr.length; i++) {
+                sum += arr[i];
+            }
+            results[1] += sum;
+        });
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        return results[0] + results[1];
     }
 
     public static void TcpReceiver(int port) {
