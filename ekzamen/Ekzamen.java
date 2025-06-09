@@ -35,6 +35,9 @@ public class Ekzamen {
         int[] test = {1, 5, 6, 3, 9, 9};
         int mul = calculateMultiplicationOfArrayIn2Threads(test);
         System.out.println("Mul = " + mul);
+
+        System.out.println("Counter = " + synchroCounter(10));
+
     }
 
     public static int multiThreadedSumOfArray(int[] arr, int threadCount) {
@@ -228,6 +231,38 @@ public class Ekzamen {
         }
 
         return res[0] * res[1];
+    }
+
+    public static int synchroCounter(int iterations) {
+        int[] sum = {0};
+        Object obj1 = new Object();
+
+        Thread th1 = new Thread(() -> {
+            synchronized(obj1) {
+                for (int i = 0; i < iterations; i++) {
+                    sum[0]++;
+                }
+            }
+        });
+
+        Thread th2 = new Thread(() -> {
+            synchronized(obj1) {
+                for (int j = 0; j < iterations; j++) {
+                    sum[0]++;
+                }
+            }
+        });
+
+        th1.start();
+        th2.start();
+        try {
+            th1.join();
+            th2.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        return sum[0];
     }
 
     public static void TcpReceiver(int port) {
