@@ -80,7 +80,6 @@ public class UdpServer {
                 sock.send(pack);
             } else 
                 System.out.println("Nikto ne prishel na shodku podpischikov...");
-
         }
     }
 

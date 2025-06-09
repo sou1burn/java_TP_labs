@@ -223,21 +223,26 @@ public static double calculateAverageIn2Threads(int[] arr) {
 </html>
 ```
 3) Составьте HTTP-запрос (не URL, а разбивку на поля заголовков и тела) к сервису get_user на сайте guap.ru, передающий два параметра: имя (`Василий`) и возраст (`20`).
-```
 ### GET
+```
 GET /get_user?name=Василий&age=20 HTTP/1.1
 Host: guap.ru
 Connection: close
-
+```
 ### POST с json
+```
 POST /get_user HTTP/1.1
 Host: guap.ru
 Content-Type: application/json
 Content-Length: 43
 Connection: close
+```
 ### не json
+```
 name=Василий&age=20
+```
 ### json
+```
 {
   "name": "Василий",
   "age": 20
