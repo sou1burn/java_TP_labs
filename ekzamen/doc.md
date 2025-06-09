@@ -376,9 +376,17 @@ git commit -m "commit 1"
 ```
 java -jar book.jar
 ```
-
+Необходимо скомпилировать код 
 ```
-
+javac Main.java Book.java
 ```
-
+Создаем текстовый документ (manifest) с правилами создания jar
+```manifest.mf
+Main-class: Main
+```
+Создаем jar
+```
+jar cfm book.jar manifest.mf Main.class Book.class
+java -jar book.jar
+```
 # Теория
