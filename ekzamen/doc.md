@@ -156,4 +156,167 @@ public static void UdpReceiver(int port) {
 </body>
 </html>
 ```
+
+## Билет вариант 1, текущий
+1) Напишите код, который вычисляет среднее арифметическое по массиву целых чисел с использованием двух потоков.  
+```
+public static double calculateAverageIn2Threads(int[] arr) {
+        if (arr == null || arr.length == 0)
+            throw new IllegalArgumentException();
+
+        int[] partialSums = new int[2];
+
+        int mid = arr.length / 2;
+
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < mid; i++) {
+                partialSums[0] += arr[i];
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            for (int i = mid; i < arr.length; i++) {
+                partialSums[0] += arr[i];
+            }
+        });
+        
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        int total = partialSums[0] + partialSums[1];
+
+        return (double) total / arr.length;
+    }
+```
+
+2) Создайте HTML-файл, содержащий таблицу размером 3×2, заполненную произвольными цифрами.  
+```
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+<body>
+
+<table>
+  <tr>
+    <td>1</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>5</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>8</td>
+  </tr>
+</table>
+
+</body>
+</html>
+```
+3) Составьте HTTP-запрос (не URL, а разбивку на поля заголовков и тела) к сервису get_user на сайте guap.ru, передающий два параметра: имя (`Василий`) и возраст (`20`).
+```
+### GET
+GET /get_user?name=Василий&age=20 HTTP/1.1
+Host: guap.ru
+Connection: close
+
+### POST с json
+POST /get_user HTTP/1.1
+Host: guap.ru
+Content-Type: application/json
+Content-Length: 43
+Connection: close
+### не json
+name=Василий&age=20
+### json
+{
+  "name": "Василий",
+  "age": 20
+}
+```
+
+## Билет, вариант 2, текущий
+Вариант 2
+1. Напишите программу, которая ищет минимум по массиву целых чисел с использованием двух потоков
+```
+public static int findMinimumUsing2Threads(int[] arr) {
+        if (arr == null || arr.length == 0)
+            throw new IllegalArgumentException();
+        
+        int mid = arr.length / 2;
+        final int[] results = {Integer.MAX_VALUE, Integer.MAX_VALUE};
+
+        Thread t1 = new Thread(() -> {
+            int localMin = 0;
+            for (int i = 0; i < mid; i++) {
+                localMin = Math.min(localMin, arr[i]);
+            }
+            results[0] = localMin;
+        });
+
+        Thread t2 = new Thread(() -> {
+            int localMin = 0;
+            for (int i = mid; i < arr.length; i++) {
+                localMin = Math.min(localMin, arr[i]);
+            }
+            results[1] = localMin;
+        });
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        return Math.min(results[0], results[1]);
+    }
+```
+2. Напишите полную HTML страницу, в которой есть ссылка на yandex.ru и ненумерованный список из трех элементов
+```
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <p><a href="https://yandex.ru" target="_blank">Yandex</a></p>
+    <h2>Список покупок:</h2>
+    <ul>
+        <li>Хлеб</li>
+        <li>Молоко</li>
+        <li>Яблоки</li>
+    </ul>
+</body>
+</html>
+```
+3. а 
+Добавьте командами git несколько файлов в репозиторий( команда git add имя файла)
+```
+git add -A
+ИЛИ
+git add blabla.java
+git add bebebe.java
+```
+3. б
+Сделайте коммит этих двух файлов
+```
+git commit -a 
+ИЛИ 
+git commit -m "commit 1"
+```
+
 # Теория
