@@ -31,6 +31,10 @@ public class Ekzamen {
 
         int minimum = findMinimumUsing2Threads(array);
         System.out.println("Minimum = " + minimum);
+
+        int[] test = {1, 5, 6, 3, 9, 9};
+        int mul = calculateMultiplicationOfArrayIn2Threads(test);
+        System.out.println("Mul = " + mul);
     }
 
     public static int multiThreadedSumOfArray(int[] arr, int threadCount) {
@@ -187,6 +191,43 @@ public class Ekzamen {
         }
 
         return results[0] + results[1];
+    }
+
+    public static int calculateMultiplicationOfArrayIn2Threads(int[] arr) {
+        if (arr == null || arr.length == 0) 
+            throw new IllegalArgumentException();
+        
+        int[] res = {0, 0};
+
+        int mid = arr.length / 2;
+
+        Thread th1 = new Thread(() -> {
+            int sum = 1;
+            for (int i = 0; i < mid; i++) {
+                sum *= arr[i];
+            }
+            res[0] += sum;
+        });
+
+        Thread th2 = new Thread(() -> {
+            int sum = 1;
+            for (int i = mid; i < arr.length; i++) {
+                sum *= arr[i];
+            }
+            res[1] += sum;
+        });
+
+        th1.start();
+        th2.start();
+
+        try {
+            th1.join();
+            th2.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        return res[0] * res[1];
     }
 
     public static void TcpReceiver(int port) {
