@@ -4,6 +4,7 @@
 # Билеты 
 
 ## Билет 1
+
 1) Программа, которая находит сумму всех элементов массива. Написать с использованием многопоточности. 
 ```
  public static int multiThreadedSumOfArray(int[] arr, int threadCount) {
@@ -105,7 +106,7 @@ public static void UdpReceiver(int port) {
             byte[] buffer = new byte[1024];
 
             while (true) {
-                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, /*host, port*/);
                 socket.receive(packet);
                 String received = new String(packet.getData(), 0, packet.getLength());
                 System.out.println("Received: " + received);
@@ -199,9 +200,6 @@ public static double calculateAverageIn2Threads(int[] arr) {
 ```
 <!DOCTYPE html>
 <html>
-    <head>
-
-    </head>
 <body>
 
 <table>
@@ -395,3 +393,357 @@ jar cfm book.jar manifest.mf Main.class Book.class
 java -jar book.jar
 ```
 # Теория
+![[Pasted image 20250610012015.png]]
+Работа сокетов:
+TCP:
+ServerSocket -- сокет сервера
+Socket -- сокет клиента = ServerSocket.accept()
+InputStream in = Socket.getInputStream()
+BufferedReader reader = new BufferedReader(new InputStreamReader(in))
+String line = reader.readLine()
+
+
+HTML:
+```
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Заголовок страницы</title>
+</head>
+<body>
+  <!-- Содержимое страницы -->
+</body>
+</html>
+```
+
+```
+|Тег|Назначение|
+|---|---|
+|`<html>`|Корневой элемент HTML-документа|
+|`<head>`|Метаинформация (заголовок, кодировка)|
+|`<title>`|Заголовок вкладки браузера|
+|`<body>`|Всё видимое содержимое страницы|
+|`<h1>`...`<h6>`|Заголовки разного уровня|
+|`<p>`|Абзац текста|
+|`<a href="...">`|Ссылка|
+|`<img src="..." alt="...">`|Картинка|
+|`<ul>` `<ol>` `<li>`|Списки|
+|`<table>`, `<tr>`, `<td>`, `<th>`|Таблицы|
+|`<div>`|Блок-контейнер|
+|`<span>`|Строчный контейнер|
+|`<br>`|Перенос строки|
+|`<hr>`|Горизонтальная линия|
+```
+
+
+### Ссылка
+`<a href="https://yandex.ru" target="_blank">Перейти на Яндекс</a>`
+
+###  Картинка
+
+`<img src="image.jpg" alt="Описание">`
+
+###  Список
+
+`<ul>   
+`<li>Пункт 1</li>   
+`<li>Пункт 2</li> 
+`</ul>`
+###  Таблица 2×2
+
+`<table border="1">   
+`<tr><th>Имя</th><th>Возраст</th></tr>`
+`<tr><td>Анна</td><td>21</td></tr> 
+`</table>`
+### Заголовки
+
+HTML предоставляет шесть уровней заголовков:
+
+`<h1>Заголовок первого уровня</h1>`
+`<h2>Заголовок второго уровня</h2>
+`<h3>Заголовок третьего уровня</h3>
+`<h4>Заголовок четвертого уровня</h4>
+`<h5>Заголовок пятого уровня</h5>
+`<h6>Заголовок шестого уровня</h6>
+
+### Параграфы и форматирование текста
+```html
+<p>Это параграф текста.</p>
+
+<!-- Разрыв строки -->
+<p>Первая строка<br>Вторая строка</p>
+
+<!-- Горизонтальная линия -->
+<hr>
+
+<!-- Выделение текста -->
+<strong>Жирный текст</strong>
+<em>Курсивный текст</em>
+<mark>Выделенный текст</mark>
+<small>Мелкий текст</small>
+<del>Зачеркнутый текст</del>
+<ins>Подчеркнутый текст</ins>
+<sub>Подстрочный текст</sub>
+<sup>Надстрочный текст</sup>
+<code>Код</code>
+<pre>Предварительно отформатированный текст
+  с сохранением пробелов
+    и переносов строк</pre>
+```
+
+## Списки
+### Маркированный список (ненумерованный)
+```html
+<ul>
+    <li>Элемент 1</li>
+    <li>Элемент 2</li>
+    <li>Элемент 3</li>
+</ul>
+```
+
+### Нумерованный список
+```html
+<ol>
+    <li>Первый элемент</li>
+    <li>Второй элемент</li>
+    <li>Третий элемент</li>
+</ol>
+```
+
+**Атрибуты нумерованного списка:**
+
+```html
+<!-- Начать с определенного номера -->
+<ol start="5">
+    <li>Пятый элемент</li>
+    <li>Шестой элемент</li>
+</ol>
+
+<!-- Изменить тип нумерации -->
+<ol type="A">
+    <li>Элемент A</li>
+    <li>Элемент B</li>
+</ol>
+```
+
+### Список определений
+```html
+<dl>
+    <dt>Термин 1</dt>
+    <dd>Определение термина 1</dd>
+    <dt>Термин 2</dt>
+    <dd>Определение термина 2</dd>
+</dl>
+```
+
+### Вложенные списки
+```html
+<ul>
+    <li>Элемент 1</li>
+    <li>Элемент 2
+        <ul>
+            <li>Вложенный элемент 2.1</li>
+            <li>Вложенный элемент 2.2</li>
+        </ul>
+    </li>
+    <li>Элемент 3</li>
+</ul>
+```
+
+## Ссылки
+
+### Базовая ссылка
+
+```html
+<a href="https://example.com">Текст ссылки</a>
+```
+
+### Дополнительные атрибуты ссылок
+
+```html
+<!-- Открыть в новой вкладке -->
+<a href="https://example.com" target="_blank">Открыть в новой вкладке</a>
+
+<!-- Добавить подсказку -->
+<a href="https://example.com" title="Посетить Example">Example</a>
+
+<!-- Ссылка на email -->
+<a href="mailto:example@example.com">Отправить email</a>
+
+<!-- Ссылка на телефон -->
+<a href="tel:+1234567890">Позвонить</a>
+
+<!-- Ссылка на якорь (внутри страницы) -->
+<a href="#section1">Перейти к разделу 1</a>
+
+<!-- Якорь (место назначения) -->
+<h2 id="section1">Раздел 1</h2>
+
+<!-- Скачивание файла -->
+<a href="file.pdf" download>Скачать PDF</a>
+```
+
+## Таблицы
+### Базовая структура таблицы
+
+
+```html
+<table>
+    <caption>Название таблицы</caption>
+    <thead>
+        <tr>
+            <th>Заголовок 1</th>
+            <th>Заголовок 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Ячейка 1</td>
+            <td>Ячейка 2</td>
+        </tr>
+        <tr>
+            <td>Ячейка 3</td>
+            <td>Ячейка 4</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2">Итого</td>
+        </tr>
+    </tfoot>
+</table>
+```
+
+## Формы
+
+### Базовая структура формы
+
+```html
+<form action="/submit" method="post">
+    <label for="name">Имя:</label>
+    <input type="text" id="name" name="name" required>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    
+    <input type="submit" value="Отправить">
+</form>
+```
+
+### Типы полей ввода
+
+```html
+<!-- Текстовое поле -->
+<input type="text" name="username" placeholder="Введите имя пользователя">
+
+<!-- Пароль -->
+<input type="password" name="password" placeholder="Введите пароль">
+
+<!-- Email -->
+<input type="email" name="email" placeholder="example@domain.com">
+
+<!-- Телефон -->
+<input type="tel" name="phone" pattern="[0-9]{10}" placeholder="1234567890">
+
+<!-- Число -->
+<input type="number" name="quantity" min="1" max="100" step="1" value="1">
+
+<!-- Диапазон (слайдер) -->
+<input type="range" name="rating" min="1" max="10" value="5">
+
+<!-- Дата -->
+<input type="date" name="birthdate">
+
+<!-- Время -->
+<input type="time" name="meeting-time">
+
+<!-- Цвет -->
+<input type="color" name="favorite-color" value="#ff0000">
+
+<!-- Флажок (чекбокс) -->
+<input type="checkbox" id="subscribe" name="subscribe" checked>
+<label for="subscribe">Подписаться на рассылку</label>
+
+<!-- Переключатель (радиокнопка) -->
+<input type="radio" id="male" name="gender" value="male">
+<label for="male">Мужской</label>
+<input type="radio" id="female" name="gender" value="female">
+<label for="female">Женский</label>
+
+<!-- Выпадающий список -->
+<label for="country">Страна:</label>
+<select id="country" name="country">
+    <option value="">Выберите страну</option>
+    <option value="ru">Россия</option>
+    <option value="us">США</option>
+    <option value="gb">Великобритания</option>
+</select>
+
+<!-- Многострочное текстовое поле -->
+<label for="message">Сообщение:</label>
+<textarea id="message" name="message" rows="4" cols="50"></textarea>
+
+<!-- Загрузка файлов -->
+<input type="file" name="document" accept=".pdf,.doc,.docx">
+<input type="file" name="images" accept="image/*" multiple>
+
+<!-- Скрытое поле -->
+<input type="hidden" name="user_id" value="123">
+
+<!-- Кнопка отправки формы -->
+<input type="submit" value="Отправить">
+
+<!-- Кнопка сброса формы -->
+<input type="reset" value="Сбросить">
+
+<!-- Обычная кнопка -->
+<button type="button">Нажми меня</button>
+```
+
+### Группировка элементов формы
+```html
+<form>
+    <fieldset>
+        <legend>Личная информация</legend>
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name">
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+    </fieldset>
+    
+    <fieldset>
+        <legend>Дополнительная информация</legend>
+        <label for="comments">Комментарии:</label>
+        <textarea id="comments" name="comments"></textarea>
+    </fieldset>
+    
+    <input type="submit" value="Отправить">
+</form>
+```
+
+### Атрибуты для валидации форм
+
+```html
+<!-- Обязательное поле -->
+<input type="text" name="username" required>
+
+<!-- Шаблон (регулярное выражение) -->
+<input type="text" name="code" pattern="[A-Za-z]{3}-[0-9]{2}" title="Формат: XXX-00">
+
+<!-- Минимальная и максимальная длина -->
+<input type="text" name="username" minlength="3" maxlength="20">
+
+<!-- Отключение автозаполнения -->
+<input type="text" name="username" autocomplete="off">
+
+<!-- Автофокус при загрузке страницы -->
+<input type="text" name="search" autofocus>
+
+<!-- Только для чтения -->
+<input type="text" name="id" value="12345" readonly>
+
+<!-- Отключенное поле -->
+<input type="text" name="status" value="Неактивно" disabled>
+```
